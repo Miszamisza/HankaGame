@@ -17,37 +17,30 @@ public class StudentMenu extends JFrame implements ActionListener{
 
     public static final int HEIGHT = 720;
     public static final int WIDTH = 1280;
-    private JTextArea JTextArea = new JTextArea();
-    private JButton fanPiwa;
-    private JButton fanWodki;
-    private JButton fanWina;
-    private JButton narkoMan;
+    private JTextArea jTextArea;
+    private JButton button;
+    private StudentFactory studentFactory = new StudentFactory();
+
+
+
 
     public StudentMenu() {
-        fanPiwa = new JButton("Fan piwa"); fanPiwa.setPreferredSize(new Dimension(100,100));
-        fanWodki = new JButton("Fan wódki");
-        fanWina = new JButton("Fan Wina");
-        narkoMan = new JButton("NarkoMan");
+        jTextArea = new JTextArea();
+        String[] labels = {"Fan piwa", "Fan wódki", "Fan wina", "NarkoMan"};
+        for (int i = 0; i < labels.length; i++) {
+            button = new JButton(labels[i]);
+            add(button);
+            button.addActionListener(this);
+        }
+        add(jTextArea);
+        setLayout(new GridLayout(4, 1));
 
-        fanPiwa.addActionListener(this);
-        fanWodki.addActionListener(this);
-        fanWina.addActionListener(this);
-        narkoMan.addActionListener(this);
-
-        setLayout(new GridLayout(4,1));
-        add(fanPiwa);
-        add(fanWodki);
-        add(fanWina);
-        add(narkoMan);
-        add(JTextArea);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        Object source = e.getSource();
-
-        StudentFactory studentFactory = new StudentFactory();
-        studentFactory.studentCreate(source.toString());
+        String name = ((JButton)e.getSource()).getText();
+        jTextArea.setText(studentFactory.studentCreate(name));
     }
 }
 
