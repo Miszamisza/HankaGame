@@ -1,7 +1,7 @@
 package menu;
 
-
 import studentFactory.StudentFactory;
+import studentFactory.StudentInterface;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -20,8 +20,7 @@ public class StudentMenu extends JFrame implements ActionListener{
     private JTextArea jTextArea;
     private JButton button;
     private StudentFactory studentFactory = new StudentFactory();
-
-
+    private int  buttonWidth = 200;
 
 
     public StudentMenu() {
@@ -30,17 +29,19 @@ public class StudentMenu extends JFrame implements ActionListener{
         for (int i = 0; i < labels.length; i++) {
             button = new JButton(labels[i]);
             add(button);
+            button.setBounds(540,buttonWidth,200, 60);
             button.addActionListener(this);
+            buttonWidth+=70;
         }
-        add(jTextArea);
-        setLayout(new GridLayout(4, 1));
+        setLayout(null);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String name = ((JButton)e.getSource()).getText();
-        jTextArea.setText(studentFactory.studentCreate(name));
+        StudentInterface student = studentFactory.studentCreate(name);
+        jTextArea.setText(student.toString());
     }
 }
 
